@@ -14,7 +14,8 @@ const PORT = process.env.PORT || 3005;
 const URL = process.env.URL;//this is to use it in trendingPage
 const APIKEY = process.env.APIKEY;
 
-const URL2 = process.env.URL2;//this for use it in  handleSearch
+const URL2 = process.env.URL2;
+//this for use it in  handleSearch
 
 
 
@@ -23,7 +24,7 @@ app.get('/trending', trendingPage);
 
 async function trendingPage(req, res){
    const axiosCallApi = await axios.get(`${URL}?api_key=${APIKEY}`)
-   // const axiosCallApi = await axios.get("https://api.themoviedb.org/3/trending/all/day?api_key=f68a5f39bcaebb80be714773fbe6c484")
+   // const axiosCallApi = await axios.get("https://api.themoviedb.org/3/trending/all/day?api_key=")
 
    console.log(axiosCallApi.data.results);
 
