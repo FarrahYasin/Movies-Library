@@ -20,6 +20,13 @@
 -connecting the server to database
 -create a route for addMovie
 -create functions to post movies and get this movies again
+-create a route for UPDATE/:id
+-create a route for DELETE/:id
+-create a route for getMovieById
+-create functions to UPDATE movies and DELETE and get movies by id
+
+
 
 ## Project Features
-My app include some data from Movies in home page and welcome massage inside favorite page,and show the trending, and search, and show TV list, and show the most popular movies, now we can add movie and get this movie
+My app include some data from Movies in home page and welcome massage inside favorite page,and show the trending, and search, and show TV list, and show the most popular movies,,, now we can add movie and get this movie, also we can update movies and delete and get Movies By Id
+..(from database)
