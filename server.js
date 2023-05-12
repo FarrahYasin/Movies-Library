@@ -30,6 +30,44 @@ app.get('/popular', listPopularPage);
 app.post('/addMovie', handleAddMovie)
 app.get('/addMovie', toGetMoviesAdded)
 
+app.put('/UPDATE/:id', updatedMovies)
+app.delete('/DELETE/:id', deleteMoviesById);
+app.get('/getMovie/:id', getMovieById);
+
+
+function getMovieById(req, res){   //   /getMovie/:id
+  const id = req.params.id;
+  const sql = `select * from movie where id=${id}`;
+  client.query(sql).then(data => {
+    res.json(
+      data.rows
+    )
+  }).catch(err => serverError(err, req, res))
+}
+
+function deleteMoviesById(req, res){   //   /DELETE/:id
+const id = req.params.id;
+const sql = `delete from movie where id = ${id} returning *;`;
+client.query(sql).then(() => {
+  return res.status(204).json({
+    code: 204,
+    message: `Row deleted successfuly with id: ${id}`
+  })
+}).catch(err => serverError(err, req, res))
+}
+
+
+function updatedMovies(req, res){   //  /UPDATE/:id
+  const id = req.params.id;
+  // const newData = req.body;
+  const sql = `update movie set comment = $1 where id = $2 returning *;`;
+  const updatedCommentValue = [req.body.comment,id];
+  client.query(sql, updatedCommentValue).then((data) =>{
+    res.status(202).json(data.rows)
+}).catch(err => serverError(err, req, res))
+
+}
+
 
 function toGetMoviesAdded(req, res) {//to get movies
   const sql = `select * from movie`;
