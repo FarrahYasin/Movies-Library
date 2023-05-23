@@ -17,7 +17,6 @@ const URL = process.env.URL;   //this is to use it in trendingPage
 const URL2 = process.env.URL2; //this for use it in  handleSearch
 const URL4 = process.env.URL4; //this for use it in  listTVPage
 const URL5 = process.env.URL5;  //this for use it in  listPopularPage
-
 const pg = require('pg'); // Require the Postgres 
 const DBURL=process.env.DBURL;
 const client = new pg.Client(DBURL); 
@@ -28,7 +27,33 @@ app.get('/search', handleSearch);
 app.get('/TV', listTVPage);
 app.get('/popular', listPopularPage);
 app.post('/addMovie', handleAddMovie)
-app.get('/addMovie', toGetMoviesAdded)
+app.get('/addMovie', toGetMoviesAdded) //name was /addMovie
+
+
+
+app.delete('/addMovie/:id', handelDeleteMovie) //name was /addMovie
+
+app.put('/addMovie/:id', handelUpdateMovie)
+
+function handelUpdateMovie(req, res) {
+  const id = req.params.id
+  const newVal = req.body;
+  const updatedVal = [newVal.title, newVal.comments, id]
+  const sql = `update movie set title=$1, comment = $2 where id = $3 returning * `
+  client.query(sql, updatedVal).then(data =>
+    res.status(202).json(data.rows)
+  ).catch(err => errorHandler(err, req, res))
+
+}
+
+function handelDeleteMovie(req, res) {
+  const id = req.params.id
+  const sql = `delete from movie where id = ${id}`;
+  client.query(sql).then(() => {
+    return res.status(204).json({
+    })
+  }).catch(err => errorHandler(err, req, res))
+}
 
 app.put('/UPDATE/:id', updatedMovies)
 app.delete('/DELETE/:id', deleteMoviesById);
