@@ -7,3 +7,4 @@ create table if not exists movie(
   comment varchar(255)
 );
 
+
